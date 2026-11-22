@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#081019" />
+    <meta
+      name="description"
+      content="OKHockey Control Room – Content-Planung, Produktion und Kanal-KPIs an einem Ort."
+    />
+    <title>OKHockey · Control Room</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="ice-lines" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="OKHockey Control Room Startseite">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" role="img">
+            <path d="M9 7v19c0 5 4 9 9 9h14" />
+            <path d="M15 7v18c0 2 2 4 4 4h13" />
+            <path d="M29 27h7v7h-7z" />
+          </svg>
+        </span>
+        <span><strong>OK</strong>HOCKEY</span>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <a href="#pipeline">Pipeline</a>
+        <a href="#schedule">Plan</a>
+        <a href="#metrics">KPIs</a>
+      </nav>
+      <button class="button button-primary" data-open="content-dialog">
+        <span aria-hidden="true">＋</span> Neue Idee
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow"><span class="live-dot"></span> Channel operations</p>
+          <h1>Dein Spielplan.<br /><em>Ein klarer Workflow.</em></h1>
+          <p class="hero-copy" id="mission">Kanal-Daten werden geladen …</p>
+        </div>
+        <div class="hero-actions">
+          <p id="today"></p>
+          <button class="text-button" data-open="metrics-dialog">KPI-Snapshot eintragen ↗</button>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="Kanalübersicht">
+        <article class="stat-card stat-card-featured">
+          <p>Offene Inhalte</p>
+          <strong id="stat-open">—</strong>
+          <span>im gesamten Workflow</span>
+        </article>
+        <article class="stat-card">
+          <p>In Produktion</p>
+          <strong id="stat-production">—</strong>
+          <span>Dreh bis Freigabe</span>
+        </article>
+        <article class="stat-card">
+          <p>Abonnenten</p>
+          <strong id="stat-subscribers">—</strong>
+          <span id="stat-date">noch kein Snapshot</span>
+        </article>
+        <article class="stat-card">
+          <p>Views · 28 Tage</p>
+          <strong id="stat-views">—</strong>
+          <span id="stat-ctr">CTR noch offen</span>
+        </article>
+      </section>
+
+      <section class="section" id="pipeline">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Redaktion</p>
+            <h2>Content-Pipeline</h2>
+          </div>
+          <div class="legend"><i></i> Status im Menü ändern</div>
+        </div>
+        <div class="pipeline" id="pipeline-board" aria-live="polite"></div>
+      </section>
+
+      <div class="split-layout">
+        <section class="panel" id="schedule">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Nächste Wechsel</p>
+              <h2>Publishing-Plan</h2>
+            </div>
+            <span class="count-badge" id="schedule-count">0</span>
+          </div>
+          <div class="schedule-list" id="schedule-list"></div>
+        </section>
+
+        <section class="panel metrics-panel" id="metrics">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Momentum</p>
+              <h2>Kanal-KPIs</h2>
+            </div>
+            <button class="icon-button" data-open="metrics-dialog" aria-label="KPI-Snapshot hinzufügen">＋</button>
+          </div>
+          <div class="metric-chart" id="metric-chart"></div>
+          <div class="metric-details" id="metric-details"></div>
+        </section>
+      </div>
+
+      <section class="section format-section">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">System</p>
+            <h2>Wochenrhythmus</h2>
+          </div>
+        </div>
+        <div class="cadence-grid" id="cadence-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <span>OKHockey Control Room</span>
+      <span>lokal · unabhängig · erweiterbar</span>
+    </footer>
+
+    <dialog id="content-dialog">
+      <form id="content-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Neue Produktion</p>
+            <h2>Idee aufs Eis bringen</h2>
+          </div>
+          <button type="button" class="dialog-close" data-close aria-label="Dialog schließen">×</button>
+        </div>
+        <label>
+          Titel
+          <input name="title" required maxlength="120" placeholder="z. B. Powerplay einfach erklärt" />
+        </label>
+        <div class="form-row">
+          <label>
+            Format
+            <select name="format" id="format-options"></select>
+          </label>
+          <label>
+            Priorität
+            <select name="priority">
+              <option value="mittel">Mittel</option>
+              <option value="hoch">Hoch</option>
+              <option value="niedrig">Niedrig</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            Verantwortlich
+            <input name="owner" value="Redaktion" />
+          </label>
+          <label>
+            Zieldatum
+            <input name="publishAt" type="date" />
+          </label>
+        </div>
+        <label>
+          Hook
+          <textarea name="hook" rows="3" placeholder="Warum soll jemand jetzt klicken und dranbleiben?"></textarea>
+        </label>
+        <fieldset>
+          <legend>Plattformen</legend>
+          <div class="checkbox-grid" id="platform-options"></div>
+        </fieldset>
+        <p class="form-error" role="alert"></p>
+        <button class="button button-primary button-full" type="submit">Idee anlegen</button>
+      </form>
+    </dialog>
+
+    <dialog id="metrics-dialog">
+      <form id="metrics-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">YouTube Studio</p>
+            <h2>KPI-Snapshot</h2>
+          </div>
+          <button type="button" class="dialog-close" data-close aria-label="Dialog schließen">×</button>
+        </div>
+        <p class="form-intro">Werte manuell aus YouTube Studio übernehmen. Ein Datum kann jederzeit aktualisiert werden.</p>
+        <label>Stichtag <input name="date" type="date" required /></label>
+        <div class="form-row">
+          <label>Abonnenten <input name="subscribers" type="number" min="0" value="0" /></label>
+          <label>Views · 28 Tage <input name="views28d" type="number" min="0" value="0" /></label>
+        </div>
+        <div class="form-row">
+          <label>Watchtime · Stunden <input name="watchHours28d" type="number" min="0" step="0.1" value="0" /></label>
+          <label>CTR · Prozent <input name="ctr" type="number" min="0" max="100" step="0.1" value="0" /></label>
+        </div>
+        <label>Ø Wiedergabedauer · Prozent <input name="averageViewPercentage" type="number" min="0" max="100" step="0.1" value="0" /></label>
+        <p class="form-error" role="alert"></p>
+        <button class="button button-primary button-full" type="submit">Snapshot speichern</button>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
